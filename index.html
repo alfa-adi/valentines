@@ -11,7 +11,7 @@
     * {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      box-sizing: border-box; 
     }
     body {
       font-family: 'Lato', sans-serif;
@@ -105,7 +105,14 @@
     }
   </style>
 </head>
-<body>
+<body> <!-- Video Background -->
+  <video class="video-bg" autoplay loop muted playsinline>
+    <!-- If you have an mp4 version, add it as a fallback -->
+    <source src="vecteezy_pink-blinking-hearts-fading-and-sparkling-in-a-dark-pink_1804155.mov" type="video/quicktime">
+    <source src="vecteezy_pink-blinking-hearts-fading-and-sparkling-in-a-dark-pink_1804155.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</body>
   <!-- Floating heart element -->
   <div class="floating-heart">❤️</div>
   
