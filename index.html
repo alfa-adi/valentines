@@ -1,12 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+  <meta charset="UTF-8">
+  <title>Happy Valentine's Day 3D</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Use a lovely gradient background */
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    }
+    /* Ensure the canvas covers the screen */
+    canvas {
+      display: block;
+    }
+    /* Overlay text style */
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .overlay h1 {
+      font-size: 3em;
+      margin: 0 0 0.5em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    .overlay p {
+      font-size: 1.5em;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>Welcome to my first HTML page.</p>
+  <!-- Overlay message -->
+  <div class="overlay">
+    <h1>Happy Valentine's Day!</h1>
+    <p>Love is in the air...</p>
+  </div>
+
+  <!-- Three.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Scene, Camera, and Renderer setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    // Set clear color to transparent so our CSS gradient shows behind the canvas
+    renderer.setClearColor( 0x000000, 0 );
+    document.body.appendChild( renderer.domElement );
+
+    // Create a heart shape using Bézier curves
+    const x = 0, y = 0;
+    const heartShape = new THREE.Shape();
+    heartShape.moveTo( x + 5, y + 5 );
+    heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
+    heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7, x - 6, y + 7 );
+    heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
+    heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
+    heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
+    heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
+
+    // Extrude settings for 3D depth
+    const extrudeSettings = {
+      steps: 2,
+      depth: 2,
+      bevelEnabled: true,
+      bevelThickness: 0.5,
+      bevelSize: 0.5,
+      bevelOffset: 0,
+      bevelSegments: 1
+    };
+
+    const geometry = new THREE.ExtrudeGeometry( heartShape, extrudeSettings );
+    // Center the geometry
+    geometry.center();
+    const material = new THREE.MeshPhongMaterial( { color: 0xff0040, shininess: 100 } );
+    const heartMesh = new THREE.Mesh( geometry, material );
+    scene.add( heartMesh );
+
+    // Add some lights to illuminate the scene
+    const pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+    pointLight.position.set( 10, 10, 10 );
+    scene.add( pointLight );
+
+    const ambientLight = new THREE.AmbientLight( 0xffffff, 0.5 );
+    scene.add( ambientLight );
+
+    // Create a sparkling particle field for extra magic
+    const particlesCount = 500;
+    const particlesGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array( particlesCount * 3 );
+    for ( let i = 0; i < particlesCount; i++ ) {
+      positions[i * 3 + 0] = ( Math.random() - 0.5 ) * 50;
+      positions[i * 3 + 1] = ( Math.random() - 0.5 ) * 50;
+      positions[i * 3 + 2] = ( Math.random() - 0.5 ) * 50;
+    }
+    particlesGeometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+    const particlesMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.3 });
+    const particles = new THREE.Points( particlesGeometry, particlesMaterial );
+    scene.add( particles );
+
+    // Position the camera so the heart is visible
+    camera.position.z = 20;
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame( animate );
+      // Rotate the heart for a dynamic 3D effect
+      heartMesh.rotation.y += 0.01;
+      heartMesh.rotation.x += 0.005;
+      // Add a gentle rotation to the particle field
+      particles.rotation.y += 0.001;
+      renderer.render( scene, camera );
+    }
+    animate();
+
+    // Handle window resize events
+    window.addEventListener( 'resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+    });
+  </script>
 </body>
 </html>
