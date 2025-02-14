@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Divi - I Really Like You</title>
   <!-- Classy fonts: Playfair Display for headings, Lato for body text -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -15,17 +15,12 @@
     }
     body {
       font-family: 'Lato', sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      background-size: 400% 400%;
-      animation: gradientAnimation 15s ease infinite;
+      /* Replace the gradient with your provided background file */
+      background: url('background.jpg') no-repeat center center/cover;
       overflow-x: hidden;
+      min-height: 100vh;
       color: #fff;
       padding: 20px;
-    }
-    @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
     /* Floating Heart Animation */
     .floating-heart {
@@ -151,7 +146,7 @@
     </div>
   </div>
   
-  <!-- Optional JavaScript for extra interactivity (if needed) -->
+  <!-- Optional JavaScript for extra interactivity -->
   <script>
     // Example: Make the floating heart pulse on click
     document.querySelector('.floating-heart').addEventListener('click', function() {
