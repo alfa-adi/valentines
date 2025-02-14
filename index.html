@@ -15,12 +15,22 @@
     }
     body {
       font-family: 'Lato', sans-serif;
-      /* Replace the gradient with your provided background file */
-      background: url('background.jpg') no-repeat center center/cover;
       overflow-x: hidden;
       min-height: 100vh;
       color: #fff;
       padding: 20px;
+      position: relative;
+      /* Remove background image from body since video is used */
+    }
+    /* Video background styling */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
     }
     /* Floating Heart Animation */
     .floating-heart {
@@ -31,6 +41,7 @@
       font-size: 80px;
       animation: float 3s ease-in-out infinite;
       pointer-events: none;
+      z-index: 1;
     }
     @keyframes float {
       0%   { transform: translateX(-50%) translateY(0); }
@@ -58,6 +69,8 @@
     /* Album section */
     .album {
       margin-top: 80px;
+      position: relative;
+      z-index: 1;
     }
     .album h2 {
       font-family: 'Playfair Display', serif;
@@ -105,14 +118,14 @@
     }
   </style>
 </head>
-<body> <!-- Video Background -->
+<body>
+  <!-- Video Background -->
   <video class="video-bg" autoplay loop muted playsinline>
-    <!-- If you have an mp4 version, add it as a fallback -->
     <source src="vecteezy_pink-blinking-hearts-fading-and-sparkling-in-a-dark-pink_1804155.mov" type="video/quicktime">
     <source src="vecteezy_pink-blinking-hearts-fading-and-sparkling-in-a-dark-pink_1804155.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-</body>
+  
   <!-- Floating heart element -->
   <div class="floating-heart">❤️</div>
   
